@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Generate Blog</h1>
+
+<div class="container">
+
+  <form action="{% url 'generate_blog' %}" method='post'>
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Enter Blog Title</label>
+      <input type="text" name='title' class="form-control" id="exampleFormControlInput1">
+    </div>
+    <button class="btn btn-primary w-100">Generate</button>
+
+  </form>
+</div>
+
+<h3>Generated Blog</h3>
+<form action="{% url 'save_blog' %}" method='post' enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Blog Title</label>
+    <input type="text" name='title' class="form-control" id="exampleFormControlInput1" value='{{generated_title}}'>
+
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Generated Content</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" name='content' rows="30">{{generated_blog}}</textarea>
+  </div>
+  <div class="mb-3">
+    <label for="formFile" class="form-label">Add Image for Blog</label>
+    <input class="form-control" type="file" name='image' id="formFile">
+  </div>
+  
+
+  <button class="btn btn-primary w-100">Save Blog</button>
+</form>
+
+</div>
+</div>
+
+{% endblock content %}
