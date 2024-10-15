@@ -1,4 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="row">
+  <div class="col-6">
+    <img src="/media/{{blog.image}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{blog.title}}</h5>
+      <p class="card-text">{{blog.content|truncatewords:20}}</p>
+    </div>
+  </div>
+  <div class="col-5">
+    <h1>Blog Comments</h1>
+    {% for comment in comments %}
+    <div class="alert alert-success">
+      <h4 class="alert-heading h5">{{comment.author}}</h4>
+      <p class="mb-0">{{comment.content}}</p>
+      <small>{{comment.comment_time}}</small>
+    </div>
+    {% endfor %}
 
+    <hr>
+    <form action="{% url 'add_comment' blogid=blog.id %}" method='post'>
+      {% csrf_token %}
+      <label for="comment" class="form-label">Write down your thoughts</label>
+      <input type="text" name='comment' id="comment" class="form-control" aria-describedby="">
+      <button class="btn btn-outline-primary mt-1 w-100">Add Comment</button>
+
+    </form>
+  </div>
+</div>
 {% endblock content %}
